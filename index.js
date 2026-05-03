@@ -21,7 +21,6 @@ const {
   MatchmakingController,
   TournamentController,
   SocialController,
-  EventsController,
   CheatController,
   CreatorCodeController,
   authenticate,
@@ -132,8 +131,6 @@ app.post('/friends/accept', FriendsController.accept);
 app.post('/friends/request/decline', FriendsController.reject);
 app.post('/friends/cancel', FriendsController.cancel);
 app.get('/friends/request', FriendsController.pending);
-app.get("/game-events/me", EventsController.getActive);
-app.post("/game-events/join/", EventsController.join);
 app.get("/user/news", NewsController.GetNews);
 app.post('/analytics', AnalyticsController.analytic);
 app.get('/highscore/:type/list/', UserController.getHighscore);
