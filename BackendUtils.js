@@ -30,7 +30,6 @@ const STANDARD_CLIENT_FEATURE_FLAGS = [
   'RemoteLocalizations',
   'RoomManagementConsole',
   'TransferAppleIdAuthorization',
-  'Events',
   'FriendsList',
   'GraphicsQualitySettings',
   'IPL_056_Dancefloor',
@@ -534,7 +533,6 @@ class UserModel {
     featureFlags: [
       'TournamentsX',
       'TournamentsXMeta',
-      'Events',
       'FriendsList',
       'GraphicsQualitySettings'
     ],
@@ -977,7 +975,6 @@ static async login(req, res) {
         'NewMatchmaking',
         'TournamentsX',
         'TournamentsXMeta',
-        'Events',
         'FriendsList',
         'GraphicsQualitySettings',
         'IPL_056_Dancefloor'
@@ -1030,7 +1027,6 @@ static async login(req, res) {
           { "Flag": "IPL_056_Dancefloor", "Enabled": true },
           { "Flag": "FriendsList", "Enabled": true },
           { "Flag": "TournamentsX", "Enabled": true },
-          { "Flag": "Events", "Enabled": true },
           { "Flag": "News", "Enabled": true },
           { "Flag": "CustomParty", "Enabled": true },
           { "Flag": "NewMatchmaking", "Enabled": true }
@@ -1039,7 +1035,6 @@ static async login(req, res) {
           "Missions",
           "FriendsList",
           "TournamentsX",
-          "Events",
           "News",
           "CustomParty",
           "NewMatchmaking",
@@ -3290,7 +3285,7 @@ class TournamentXController {
       prizeBannerColour: "#0008ff",
       headerColour: "#001580",
       mapListGradientColourTop: "#0037ff",
-      mapListGradientColourBottom: "#001640",
+      mapListGradientColourBottom: "#00379e",
       detailsPanelBorderColourTop: "#002aff",
       detailsPanelBorderColourBottom: "#001180",
       colourData: {
@@ -3326,7 +3321,7 @@ class TournamentXController {
       descriptionKey: "1v1 mode on Laser Tracer. Dodge fast-moving laser beams and outlast your opponent in an intense reflex-based battle. Each win rewards you with 100 gems, precision and timing are key to victory.",
       listItemBackgroundImage: "AbductedAvenue_Background_Image_Tournaments_Card",
       detailsPanelBackgroundImage: "AbductedAvenue_Background_Image_Tournaments",
-      prizeBannerColour: "#39FF14",
+      prizeBannerColour: "#158e00",
       headerColour: "#006400",
       mapListGradientColourTop: "#39FF14",
       mapListGradientColourBottom: "#008102",
@@ -3337,9 +3332,9 @@ class TournamentXController {
         detailsPanelBorderColour: "#008724",
         headerGradientRight: "#5bff4f",
         headerGradientLeft: "#078c00",
-        infoWidgetsGradientRight: "#4fff6f",
-        infoWidgetsGradientLeft: "#3bff69",
-        infoWidgetsBorderColour: "#6fff8c"
+        infoWidgetsGradientRight: "#007f17",
+        infoWidgetsGradientLeft: "#008820",
+        infoWidgetsBorderColour: "#008f1d"
       },
       listPriority: 2,
       minPlayers: 2,
@@ -3363,8 +3358,8 @@ class TournamentXController {
       name: "1v1 Laser Dash",
       nameKey: "1v1 Laser Dash",
       descriptionKey: "1v1 mode on Laser Dash. Race, dodge, and survive through fast-paced laser obstacles while competing against your opponent. Each win rewards you with 100 gems, speed and precision decide the winner.",
-      listItemBackgroundImage: "Card_Neon",
-      detailsPanelBackgroundImage: "Hub_Neon",
+      listItemBackgroundImage: "LaserDash_Background_Image_Tournaments_Card",
+      detailsPanelBackgroundImage: "LaserDash_Background_Image_Tournaments",
       prizeBannerColour: "#0073ff",
       headerColour: "#003c80",
       mapListGradientColourTop: "#0099ff",
@@ -3402,22 +3397,22 @@ class TournamentXController {
       name: "1v1 Banana Only",
       nameKey: "1v1 Banana Only",
       descriptionKey: "1v1 mode on Rush Hour. Navigate through heavy traffic and outspeed your opponent in this urban race. Each win rewards you with 100 gems, speed and agility are your best friends.",
-      listItemBackgroundImage: "Premium_LBD_Background_Image_Tournaments_Card",
-      detailsPanelBackgroundImage: "Premium_LBD_Background_Image_Tournaments",
+      listItemBackgroundImage: "Tetris_Background_Image_Tournaments_Card",
+      detailsPanelBackgroundImage: "Tetris_Background_Image_Tournaments",
       prizeBannerColour: "#5900ff",
-      headerColour: "#2d0080",
+      headerColour: "#4400c2",
       mapListGradientColourTop: "#8800ff",
-      mapListGradientColourBottom: "#490073",
+      mapListGradientColourBottom: "#63009c",
       detailsPanelBorderColourTop: "#8c00ff",
       detailsPanelBorderColourBottom: "#350080",
       colourData: {
-        detailsPanelMainColour: "#9e5eff",
+        detailsPanelMainColour: "#7c25ff",
         detailsPanelBorderColour: "#460087",
-        headerGradientRight: "#9e4fff",
+        headerGradientRight: "#8b2cff",
         headerGradientLeft: "#54008c",
-        infoWidgetsGradientRight: "#b26fff",
+        infoWidgetsGradientRight: "#8b26ff",
         infoWidgetsGradientLeft: "#9a3bff",
-        infoWidgetsBorderColour: "#c08cff"
+        infoWidgetsBorderColour: "#8019ff"
       },
       listPriority: 4,
       minPlayers: 2,
@@ -4763,6 +4758,61 @@ class TournamentController {
     }
 }
 
+class EventsController {
+  static async getActive(req, res) {
+    try {
+      const now = new Date();
+      // Ativa pelo menos 1 evento forçando datas válidas
+      const events = (SharedData.GameEvents || []).map(e => ({
+        ...e,
+        StartDateTime: "2024-01-01T00:00:00Z", // Data fixa no passado
+        EndDateTime: "2027-12-31T23:59:59Z", // Data fixa no futuro
+        Visible: true
+      }));
+      
+      res.json({ 
+        gameEvents: events,
+        GameEvents: events
+      });
+      Console.log("GameEvents", `Returned ${events.length} active events`);
+    } catch (err) {
+      Console.error("GameEvents", "Error:", err);
+      res.status(500).json([]);
+    }
+  }
+  static async join(req, res) {
+    try {
+      const { user } = req;
+      const { EventId } = req.body || {};
+      if (!EventId) {
+        Console.log("GameEvents", `User ${user?.username || "Unknown"} missing EventId in request`);
+        return res.status(400).json({ message: "eventid requeried" });
+      }
+      const events = SharedData.GameEvents || [];
+      const event = events.find(e => e.Id === EventId);
+      if (!event) {
+         Console.log("GameEvents", `User ${user?.username || "Unknown"} tried to join non-existent event ${EventId}`);
+        return res.status(404).json({ message: "evento nao encontrado" });
+      }
+      const now = new Date();
+      const start = new Date(event.StartDateTime);
+      const end = new Date(event.EndDateTime);
+      if (!(start <= now && now <= end)) {
+         Console.log("GameEvents", `User ${user?.username || "Unknown"} tried to join inactive event ${EventId}`);
+        return res.status(400).json({ message: "evento nao esta ativo" });
+      }
+      const response = {
+        EventId,
+        status: "joined"
+      };
+      Console.log("GameEvents", `User ${user?.username || "Unknown"} joined event ${EventId}`);
+      return res.status(200).json(response);
+    } catch (err) {
+      Console.error("GameEvents", "Error:", err);
+      return res.status(500).json({ message: "internal error" });
+    }
+  }
+}
 class CheatController {
   static async reportCheat(req, res) {
     try {
@@ -5088,6 +5138,7 @@ async function sendShared(req, res) {
     data.FeatureFlags.IPL_056_TournamentX = true;
     data.FeatureFlags.FriendsList = true;
     data.FeatureFlags.TournamentsX = true;
+    data.FeatureFlags.Events = true;
     data.FeatureFlags.News = true;
     data.FeatureFlags.CustomParty = true;
     data.FeatureFlags.NewMatchmaking = true;
@@ -5098,6 +5149,7 @@ async function sendShared(req, res) {
       { "Flag": "FriendsList", "Enabled": true },
       { "Flag": "TournamentsX", "Enabled": true },
       { "Flag": "TournamentsXMeta", "Enabled": true },
+      { "Flag": "Events", "Enabled": true },
       { "Flag": "News", "Enabled": true },
       { "Flag": "CustomParty", "Enabled": true },
       { "Flag": "NewMatchmaking", "Enabled": true }
@@ -5109,6 +5161,7 @@ async function sendShared(req, res) {
       "FriendsList",
       "TournamentsX",
       "TournamentsXMeta",
+      "Events",
       "News",
       "CustomParty",
       "NewMatchmaking",
@@ -5121,6 +5174,16 @@ async function sendShared(req, res) {
     } else {
       // Se for objeto, mantemos as propriedades e adicionamos a lista separada
       data.FeatureFlagsV2 = data.FeatureFlagsList;
+    }
+
+    // Ativa eventos e torneios
+    if (Array.isArray(data.GameEvents)) {
+      data.GameEvents = data.GameEvents.map(e => ({
+        ...e,
+        StartDateTime: "2024-01-01T00:00:00Z",
+        EndDateTime: "2027-12-31T23:59:59Z",
+        Visible: true
+      }));
     }
 
     // Mostrar Torneios do TournamentX
@@ -5224,6 +5287,7 @@ module.exports = {
   MatchmakingController,
   TournamentController,
   SocialController,
+  EventsController,
   CheatController,
   CreatorCodeController,
   authenticate,
