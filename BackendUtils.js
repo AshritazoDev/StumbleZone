@@ -4763,61 +4763,6 @@ class TournamentController {
     }
 }
 
-class EventsController {
-  static async getActive(req, res) {
-    try {
-      const now = new Date();
-      // Ativa pelo menos 1 evento forçando datas válidas
-      const events = (SharedData.GameEvents || []).map(e => ({
-        ...e,
-        StartDateTime: "2024-01-01T00:00:00Z", // Data fixa no passado
-        EndDateTime: "2027-12-31T23:59:59Z", // Data fixa no futuro
-        Visible: true
-      }));
-      
-      res.json({ 
-        gameEvents: events,
-        GameEvents: events
-      });
-      Console.log("GameEvents", `Returned ${events.length} active events`);
-    } catch (err) {
-      Console.error("GameEvents", "Error:", err);
-      res.status(500).json([]);
-    }
-  }
-  static async join(req, res) {
-    try {
-      const { user } = req;
-      const { EventId } = req.body || {};
-      if (!EventId) {
-        Console.log("GameEvents", `User ${user?.username || "Unknown"} missing EventId in request`);
-        return res.status(400).json({ message: "eventid requeried" });
-      }
-      const events = SharedData.GameEvents || [];
-      const event = events.find(e => e.Id === EventId);
-      if (!event) {
-         Console.log("GameEvents", `User ${user?.username || "Unknown"} tried to join non-existent event ${EventId}`);
-        return res.status(404).json({ message: "evento nao encontrado" });
-      }
-      const now = new Date();
-      const start = new Date(event.StartDateTime);
-      const end = new Date(event.EndDateTime);
-      if (!(start <= now && now <= end)) {
-         Console.log("GameEvents", `User ${user?.username || "Unknown"} tried to join inactive event ${EventId}`);
-        return res.status(400).json({ message: "evento nao esta ativo" });
-      }
-      const response = {
-        EventId,
-        status: "joined"
-      };
-      Console.log("GameEvents", `User ${user?.username || "Unknown"} joined event ${EventId}`);
-      return res.status(200).json(response);
-    } catch (err) {
-      Console.error("GameEvents", "Error:", err);
-      return res.status(500).json({ message: "internal error" });
-    }
-  }
-}
 class CheatController {
   static async reportCheat(req, res) {
     try {
