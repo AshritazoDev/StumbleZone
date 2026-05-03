@@ -5088,7 +5088,6 @@ async function sendShared(req, res) {
     data.FeatureFlags.IPL_056_TournamentX = true;
     data.FeatureFlags.FriendsList = true;
     data.FeatureFlags.TournamentsX = true;
-    data.FeatureFlags.Events = true;
     data.FeatureFlags.News = true;
     data.FeatureFlags.CustomParty = true;
     data.FeatureFlags.NewMatchmaking = true;
@@ -5099,7 +5098,6 @@ async function sendShared(req, res) {
       { "Flag": "FriendsList", "Enabled": true },
       { "Flag": "TournamentsX", "Enabled": true },
       { "Flag": "TournamentsXMeta", "Enabled": true },
-      { "Flag": "Events", "Enabled": true },
       { "Flag": "News", "Enabled": true },
       { "Flag": "CustomParty", "Enabled": true },
       { "Flag": "NewMatchmaking", "Enabled": true }
@@ -5111,7 +5109,6 @@ async function sendShared(req, res) {
       "FriendsList",
       "TournamentsX",
       "TournamentsXMeta",
-      "Events",
       "News",
       "CustomParty",
       "NewMatchmaking",
@@ -5124,16 +5121,6 @@ async function sendShared(req, res) {
     } else {
       // Se for objeto, mantemos as propriedades e adicionamos a lista separada
       data.FeatureFlagsV2 = data.FeatureFlagsList;
-    }
-
-    // Ativa eventos e torneios
-    if (Array.isArray(data.GameEvents)) {
-      data.GameEvents = data.GameEvents.map(e => ({
-        ...e,
-        StartDateTime: "2024-01-01T00:00:00Z",
-        EndDateTime: "2027-12-31T23:59:59Z",
-        Visible: true
-      }));
     }
 
     // Mostrar Torneios do TournamentX
@@ -5237,7 +5224,6 @@ module.exports = {
   MatchmakingController,
   TournamentController,
   SocialController,
-  EventsController,
   CheatController,
   CreatorCodeController,
   authenticate,
