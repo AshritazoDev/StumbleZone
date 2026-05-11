@@ -24,6 +24,9 @@ const STANDARD_CLIENT_FEATURE_FLAGS = [
   'MatchmakingFilter',
   'NewMatchmaking',
   'Pusher',
+  'Tournament',
+  'ClassicTournaments',
+  'Tournaments',
   'TournamentsX',
   'TournamentsXMeta',
   'QuantumSystemManagement',
@@ -33,7 +36,8 @@ const STANDARD_CLIENT_FEATURE_FLAGS = [
   'FriendsList',
   'GraphicsQualitySettings',
   'IPL_056_Dancefloor',
-  'Missions'
+  'Missions',
+  'Workshop'
 ];
 
 function pickFinishRoundLevelIds(preferredLevelId = 'IPL_056_Dancefloor') {
@@ -534,7 +538,11 @@ class UserModel {
       'TournamentsX',
       'TournamentsXMeta',
       'FriendsList',
-      'GraphicsQualitySettings'
+      'GraphicsQualitySettings',
+      'Workshop',
+      'ClassicTournaments',
+      'Tournaments',
+      'Tournament'
     ],
     googleId: platformData.googleId || '',
     facebookId: platformData.facebookId || '',
@@ -977,7 +985,11 @@ static async login(req, res) {
         'TournamentsXMeta',
         'FriendsList',
         'GraphicsQualitySettings',
-        'IPL_056_Dancefloor'
+        'IPL_056_Dancefloor',
+        'Workshop',
+        'ClassicTournaments',
+        'Tournaments',
+        'Tournament'
       ]
       Console.log("Login", "User Logged: " + user.username);
       return res.status(200).json({
@@ -1029,16 +1041,25 @@ static async login(req, res) {
           { "Flag": "TournamentsX", "Enabled": true },
           { "Flag": "News", "Enabled": true },
           { "Flag": "CustomParty", "Enabled": true },
-          { "Flag": "NewMatchmaking", "Enabled": true }
+          { "Flag": "NewMatchmaking", "Enabled": true },
+          { "Flag": "Workshop", "Enabled": true },
+          { "Flag": "ClassicTournaments", "Enabled": true },
+          { "Flag": "Tournaments", "Enabled": true },
+          { "Flag": "Tournament", "Enabled": true }
         ],
         FeatureFlag: [
           "Missions",
           "FriendsList",
           "TournamentsX",
+          "Events",
           "News",
           "CustomParty",
           "NewMatchmaking",
-          "IPL_056_Dancefloor"
+          "IPL_056_Dancefloor",
+          "Workshop",
+          "ClassicTournaments",
+          "Tournaments",
+          "Tournament"
         ]
       };
 
@@ -1793,7 +1814,11 @@ class EconomyController {
         'RemoteLocalizations',
         'RoomManagementConsole',
         'TransferAppleIdAuthorization',
-        'IPL_056_Dancefloor'
+        'IPL_056_Dancefloor',
+        'Workshop',
+        'ClassicTournaments',
+        'Tournaments',
+        'Tournament'
       ];
 
       const response = {
@@ -2004,7 +2029,11 @@ class EconomyController {
         'RemoteLocalizations',
         'RoomManagementConsole',
         'TransferAppleIdAuthorization',
-        'IPL_056_Dancefloor'
+        'IPL_056_Dancefloor',
+        'Workshop',
+        'ClassicTournaments',
+        'Tournaments',
+        'Tournament'
       ];
 
       const response = {
@@ -2152,7 +2181,11 @@ class EconomyController {
         'RemoteLocalizations',
         'RoomManagementConsole',
         'TransferAppleIdAuthorization',
-        'IPL_056_Dancefloor'
+        'IPL_056_Dancefloor',
+        'Workshop',
+        'ClassicTournaments',
+        'Tournaments',
+        'Tournament'
       ],
         PhotonJwt: "",
         TermsOfServiceAccepted: true,
@@ -2704,7 +2737,11 @@ class EconomyController {
         'RemoteLocalizations',
         'RoomManagementConsole',
         'TransferAppleIdAuthorization',
-        'IPL_056_Dancefloor'
+        'IPL_056_Dancefloor',
+        'Workshop',
+        'ClassicTournaments',
+        'Tournaments',
+        'Tournament'
       ];
 
       const response = {
@@ -3285,7 +3322,7 @@ class TournamentXController {
       prizeBannerColour: "#0008ff",
       headerColour: "#001580",
       mapListGradientColourTop: "#0037ff",
-      mapListGradientColourBottom: "#00379e",
+      mapListGradientColourBottom: "#001640",
       detailsPanelBorderColourTop: "#002aff",
       detailsPanelBorderColourBottom: "#001180",
       colourData: {
@@ -3321,7 +3358,7 @@ class TournamentXController {
       descriptionKey: "1v1 mode on Laser Tracer. Dodge fast-moving laser beams and outlast your opponent in an intense reflex-based battle. Each win rewards you with 100 gems, precision and timing are key to victory.",
       listItemBackgroundImage: "AbductedAvenue_Background_Image_Tournaments_Card",
       detailsPanelBackgroundImage: "AbductedAvenue_Background_Image_Tournaments",
-      prizeBannerColour: "#158e00",
+      prizeBannerColour: "#39FF14",
       headerColour: "#006400",
       mapListGradientColourTop: "#39FF14",
       mapListGradientColourBottom: "#008102",
@@ -3332,9 +3369,9 @@ class TournamentXController {
         detailsPanelBorderColour: "#008724",
         headerGradientRight: "#5bff4f",
         headerGradientLeft: "#078c00",
-        infoWidgetsGradientRight: "#007f17",
-        infoWidgetsGradientLeft: "#008820",
-        infoWidgetsBorderColour: "#008f1d"
+        infoWidgetsGradientRight: "#4fff6f",
+        infoWidgetsGradientLeft: "#3bff69",
+        infoWidgetsBorderColour: "#6fff8c"
       },
       listPriority: 2,
       minPlayers: 2,
@@ -3358,8 +3395,8 @@ class TournamentXController {
       name: "1v1 Laser Dash",
       nameKey: "1v1 Laser Dash",
       descriptionKey: "1v1 mode on Laser Dash. Race, dodge, and survive through fast-paced laser obstacles while competing against your opponent. Each win rewards you with 100 gems, speed and precision decide the winner.",
-      listItemBackgroundImage: "LaserDash_Background_Image_Tournaments_Card",
-      detailsPanelBackgroundImage: "LaserDash_Background_Image_Tournaments",
+      listItemBackgroundImage: "Card_Neon",
+      detailsPanelBackgroundImage: "Hub_Neon",
       prizeBannerColour: "#0073ff",
       headerColour: "#003c80",
       mapListGradientColourTop: "#0099ff",
@@ -3397,22 +3434,22 @@ class TournamentXController {
       name: "1v1 Banana Only",
       nameKey: "1v1 Banana Only",
       descriptionKey: "1v1 mode on Rush Hour. Navigate through heavy traffic and outspeed your opponent in this urban race. Each win rewards you with 100 gems, speed and agility are your best friends.",
-      listItemBackgroundImage: "Tetris_Background_Image_Tournaments_Card",
-      detailsPanelBackgroundImage: "Tetris_Background_Image_Tournaments",
+      listItemBackgroundImage: "Premium_LBD_Background_Image_Tournaments_Card",
+      detailsPanelBackgroundImage: "Premium_LBD_Background_Image_Tournaments",
       prizeBannerColour: "#5900ff",
-      headerColour: "#4400c2",
+      headerColour: "#2d0080",
       mapListGradientColourTop: "#8800ff",
-      mapListGradientColourBottom: "#63009c",
+      mapListGradientColourBottom: "#490073",
       detailsPanelBorderColourTop: "#8c00ff",
       detailsPanelBorderColourBottom: "#350080",
       colourData: {
-        detailsPanelMainColour: "#7c25ff",
+        detailsPanelMainColour: "#9e5eff",
         detailsPanelBorderColour: "#460087",
-        headerGradientRight: "#8b2cff",
+        headerGradientRight: "#9e4fff",
         headerGradientLeft: "#54008c",
-        infoWidgetsGradientRight: "#8b26ff",
+        infoWidgetsGradientRight: "#b26fff",
         infoWidgetsGradientLeft: "#9a3bff",
-        infoWidgetsBorderColour: "#8019ff"
+        infoWidgetsBorderColour: "#c08cff"
       },
       listPriority: 4,
       minPlayers: 2,
@@ -5138,10 +5175,13 @@ async function sendShared(req, res) {
     data.FeatureFlags.IPL_056_TournamentX = true;
     data.FeatureFlags.FriendsList = true;
     data.FeatureFlags.TournamentsX = true;
-    data.FeatureFlags.Events = true;
     data.FeatureFlags.News = true;
     data.FeatureFlags.CustomParty = true;
     data.FeatureFlags.NewMatchmaking = true;
+    data.FeatureFlags.Workshop = true;
+    data.FeatureFlags.ClassicTournaments = true;
+    data.FeatureFlags.Tournaments = true;
+    data.FeatureFlags.Tournament = true;
 
     // Formato Lista de Objetos (v2)
     data.FeatureFlagsList = [
@@ -5149,10 +5189,12 @@ async function sendShared(req, res) {
       { "Flag": "FriendsList", "Enabled": true },
       { "Flag": "TournamentsX", "Enabled": true },
       { "Flag": "TournamentsXMeta", "Enabled": true },
-      { "Flag": "Events", "Enabled": true },
       { "Flag": "News", "Enabled": true },
       { "Flag": "CustomParty", "Enabled": true },
-      { "Flag": "NewMatchmaking", "Enabled": true }
+      { "Flag": "NewMatchmaking", "Enabled": true },
+      { "Flag": "ClassicTournaments", "Enabled": true },
+      { "Flag": "Tournaments", "Enabled": true },
+      { "Flag": "Tournament", "Enabled": true }
     ];
 
     // Formato Lista de Strings (v2 Alternativo)
@@ -5161,11 +5203,14 @@ async function sendShared(req, res) {
       "FriendsList",
       "TournamentsX",
       "TournamentsXMeta",
-      "Events",
       "News",
       "CustomParty",
       "NewMatchmaking",
-      "IPL_056_Dancefloor"
+      "IPL_056_Dancefloor",
+      "Workshop",
+      "ClassicTournaments",
+      "Tournaments",
+      "Tournament"
     ];
 
     // Se o cliente esperar FeatureFlags como array (comum em v2)
